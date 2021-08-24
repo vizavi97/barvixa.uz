@@ -1,0 +1,10 @@
+name: PlaceController
+form: $/tim/barviha/models/place/fields.yaml
+modelClass: Tim\Barviha\Models\Place
+defaultRedirect: tim/barviha/placecontroller
+create:
+    redirect: 'tim/barviha/placecontroller/update/:id'
+    redirectClose: tim/barviha/placecontroller
+update:
+    redirect: tim/barviha/placecontroller
+    redirectClose: tim/barviha/placecontroller

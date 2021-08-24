@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/barviha",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "tim",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "telegram-bot/api": "^2.3"
+  }
+}

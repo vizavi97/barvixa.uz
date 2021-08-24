@@ -1,0 +1,10 @@
+name: Mining
+form: $/tim/vavilon/models/mining/fields.yaml
+modelClass: Tim\Vavilon\Models\Mining
+defaultRedirect: tim/vavilon/mining
+create:
+    redirect: 'tim/vavilon/mining/update/:id'
+    redirectClose: tim/vavilon/mining
+update:
+    redirect: tim/vavilon/mining
+    redirectClose: tim/vavilon/mining

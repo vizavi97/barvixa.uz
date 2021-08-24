@@ -1,0 +1,38 @@
+fields:
+    is_active:
+        label: Активировать
+        span: auto
+        type: switch
+    name:
+        label: 'Название пакета'
+        span: full
+        type: text
+    v_energy_count:
+        label: 'Количество V-ENERGY'
+        span: auto
+        type: number
+    type:
+        label: 'Тип криптокалюты'
+        span: auto
+        type: text
+    base_invest_value:
+        label: 'базовая величина инстеций'
+        span: auto
+        type: number
+    base_profit_value:
+        label: 'базовая величина прибыли'
+        span: auto
+        type: number
+    preview_img:
+        label: 'Картинка для блока майнинг'
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    daily_cost:
+        label: 'Плата за обслуживание в сутки'
+        span: auto
+        type: number

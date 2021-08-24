@@ -1,0 +1,20 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table tim_barviha_product_categories'
+    - builder_table_create_tim_barviha_product_categories.php
+1.0.3:
+    - 'Updated table tim_barviha_product_categories'
+    - builder_table_update_tim_barviha_product_categories.php
+1.0.4:
+    - 'Created table tim_barviha_products'
+    - builder_table_create_tim_barviha_products.php
+1.0.5:
+    - 'Updated table tim_barviha_products'
+    - builder_table_update_tim_barviha_products.php
+1.0.6:
+    - 'Updated table tim_barviha_products'
+    - builder_table_update_tim_barviha_products_2.php
+1.0.7:
+    - 'Updated table tim_barviha_products'
+    - builder_table_update_tim_barviha_products_3.php

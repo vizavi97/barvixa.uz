@@ -1,0 +1,10 @@
+name: TestController
+form: $/tim/barviha/models/test/fields.yaml
+modelClass: Tim\Barviha\Models\Test
+defaultRedirect: tim/barviha/testcontroller
+create:
+    redirect: 'tim/barviha/testcontroller/update/:id'
+    redirectClose: tim/barviha/testcontroller
+update:
+    redirect: tim/barviha/testcontroller
+    redirectClose: tim/barviha/testcontroller

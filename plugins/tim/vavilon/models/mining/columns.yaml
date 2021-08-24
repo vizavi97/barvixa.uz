@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: name
+        type: text
+    v_energy_count:
+        label: v_energy_count
+        type: number
+    base_invest_value:
+        label: base_invest_value
+        type: number
+    base_profit_value:
+        label: base_profit_value
+        type: number
+    type:
+        label: type
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    is_active:
+        label: Активирован
+        type: switch
+    daily_cost:
+        label: daily_cost
+        type: number

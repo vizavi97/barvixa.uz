@@ -1,0 +1,25 @@
+==
+{% set arr = [0,1,2,3,4,5] %}
+<section class='products'>
+	<div class='container'>
+		<div class='products-container' id='products'>
+			<h2>ПРОДУКТЫ КОМПАНИИ</h2>
+			<ul class='products-items row'>
+				{%for item in arr%}
+					<li class="col-md-4">
+						<div class="products-item">
+							<div class='products-item-top'>
+								<div class="products-item-icon">
+									<img src="{{'assets/images/landing/building.svg' | theme}}" alt="building">
+								</div>
+								<h2>Недвижимость</h2>
+							</div>
+							<p>Lorem ipsum dolor sit amet, consectetur adiis icing elit, 
+							sed do eiusmod tempor incididunt ut</p>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</section>

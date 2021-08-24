@@ -1,0 +1,26 @@
+columns:
+    id:
+        label: id
+        type: number
+    title:
+        label: title
+        type: text
+    cost:
+        label: cost
+        type: number
+    desc:
+        label: desc
+        type: text
+    category:
+        label: Категория
+        type: number
+        valueFrom: title
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    slug:
+        label: slug
+        type: text

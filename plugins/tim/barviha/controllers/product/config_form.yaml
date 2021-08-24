@@ -1,0 +1,10 @@
+name: Product
+form: $/tim/barviha/models/product/fields.yaml
+modelClass: Tim\Barviha\Models\Product
+defaultRedirect: tim/barviha/product
+create:
+    redirect: 'tim/barviha/product/update/:id'
+    redirectClose: tim/barviha/product
+update:
+    redirect: tim/barviha/product
+    redirectClose: tim/barviha/product

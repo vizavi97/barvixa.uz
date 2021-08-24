@@ -1,0 +1,20 @@
+plugin:
+    name: 'tim.barviha::lang.plugin.name'
+    description: 'tim.barviha::lang.plugin.description'
+    author: Tim
+    icon: oc-icon-adjust
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Barviha
+        url: tim/barviha/product
+        icon: icon-apple
+        sideMenu:
+            side-menu-item:
+                label: 'Категории продуктов'
+                url: tim/barviha/productscategories
+                icon: icon-tags
+            side-menu-item2:
+                label: Продукты
+                url: tim/barviha/product
+                icon: icon-tag

@@ -1,0 +1,17 @@
+columns:
+  id:
+    label: id
+    type: number
+  number:
+    label: number
+    type: number
+  hall:
+    label: Зал
+    type: number
+    valueFrom: "title"
+  created_at:
+    label: created_at
+    type: datetime
+  updated_at:
+    label: updated_at
+    type: datetime

@@ -1,0 +1,10 @@
+name: HallController
+form: $/tim/barviha/models/hall/fields.yaml
+modelClass: Tim\Barviha\Models\Hall
+defaultRedirect: tim/barviha/hallcontroller
+create:
+    redirect: 'tim/barviha/hallcontroller/update/:id'
+    redirectClose: tim/barviha/hallcontroller
+update:
+    redirect: tim/barviha/hallcontroller
+    redirectClose: tim/barviha/hallcontroller

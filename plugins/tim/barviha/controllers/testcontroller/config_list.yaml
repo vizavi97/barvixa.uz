@@ -1,0 +1,12 @@
+list: $/tim/barviha/models/test/columns.yaml
+modelClass: Tim\Barviha\Models\Test
+title: TestController
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'tim/barviha/testcontroller/update/:id'

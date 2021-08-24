@@ -1,0 +1,11 @@
+name: ProductsCategories
+modelClass: Tim\Barviha\Models\ProductCategories
+form: $/tim/barviha/models/productcategories/fields.yaml
+defaultRedirect: tim/barviha/productscategories
+create:
+    redirect: 'tim/barviha/productscategories/update/:id'
+    redirectClose: tim/barviha/productscategories
+update:
+    redirect: tim/barviha/productscategories
+    redirectClose: tim/barviha/productscategories
+preview: {  }

@@ -1,0 +1,22 @@
+fields:
+    title:
+        label: 'Название категории'
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        defaultFrom: title
+        preset:
+            field: title
+            type: slug
+        type: text
+    preview_img:
+        label: 'Фотография категории'
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload

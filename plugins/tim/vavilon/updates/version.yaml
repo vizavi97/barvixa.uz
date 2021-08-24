@@ -1,0 +1,38 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table tim_vavilon_mining'
+    - builder_table_create_tim_vavilon_mining.php
+1.0.3:
+    - 'Updated table tim_vavilon_mining'
+    - builder_table_update_tim_vavilon_mining.php
+1.0.4:
+    - 'Updated table tim_vavilon_mining'
+    - builder_table_update_tim_vavilon_mining_2.php
+1.0.5:
+    - 'Updated table tim_vavilon_mining'
+    - builder_table_update_tim_vavilon_mining_3.php
+1.0.6:
+    - 'Updated table tim_vavilon_mining'
+    - builder_table_update_tim_vavilon_mining_4.php
+1.0.7:
+    - 'Updated table tim_vavilon_mining'
+    - builder_table_update_tim_vavilon_mining_5.php
+1.0.8:
+    - 'Created table tim_vavilon_stacking'
+    - builder_table_create_tim_vavilon_stacking.php
+1.0.9:
+    - 'Updated table tim_vavilon_stacking'
+    - builder_table_update_tim_vavilon_stacking.php
+1.0.10:
+    - 'Updated table tim_vavilon_stacking'
+    - builder_table_update_tim_vavilon_stacking_2.php
+1.0.11:
+    - 'Updated table tim_vavilon_stacking'
+    - builder_table_update_tim_vavilon_stacking_3.php
+1.0.12:
+    - 'Created table tim_vavilon_users_ref'
+    - builder_table_create_tim_vavilon_users_ref.php
+1.0.13:
+    - 'Updated table tim_vavilon_users_ref'
+    - builder_table_update_tim_vavilon_users_ref.php

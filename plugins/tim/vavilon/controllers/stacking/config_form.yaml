@@ -1,0 +1,10 @@
+name: Stacking
+form: $/tim/vavilon/models/stacking/fields.yaml
+modelClass: Tim\Vavilon\Models\Stacking
+defaultRedirect: tim/vavilon/stacking
+create:
+    redirect: 'tim/vavilon/stacking/update/:id'
+    redirectClose: tim/vavilon/stacking
+update:
+    redirect: tim/vavilon/stacking
+    redirectClose: tim/vavilon/stacking

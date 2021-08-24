@@ -1,0 +1,44 @@
+fields:
+    is_active:
+        label: Активировать
+        span: full
+        type: switch
+    name:
+        label: 'Название блока'
+        span: auto
+        required: 1
+        type: text
+    profit:
+        label: 'Среднегодовая доходность:'
+        span: auto
+        required: 1
+        type: text
+    type:
+        label: 'Тип крипто-валюты'
+        span: auto
+        required: 1
+        type: text
+    min_attachment:
+        label: 'Минимальная сумма накоплений: в крито-валюте'
+        span: auto
+        required: 1
+        type: number
+    profit_min_percent:
+        label: 'Минимальный процент прибыли'
+        span: auto
+        required: 1
+        type: number
+    profit_max_percent:
+        label: 'Максимальный процент прибыли'
+        span: auto
+        required: 1
+        type: number
+    preview_img:
+        label: Картинка
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload

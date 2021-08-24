@@ -1,0 +1,14 @@
+fields:
+    title:
+        label: Название
+        span: auto
+        type: text
+    preview_img:
+        label: 'Фотография Зала'
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload

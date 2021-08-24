@@ -1,0 +1,11 @@
+fields:
+    number:
+        label: 'номер стола'
+        span: auto
+        type: number
+    hall:
+        label: 'Выберете зал к которому относится стол'
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation

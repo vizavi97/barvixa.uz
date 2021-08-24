@@ -1,0 +1,20 @@
+plugin:
+    name: 'tim.vavilon::lang.plugin.name'
+    description: 'tim.vavilon::lang.plugin.description'
+    author: Tim
+    icon: oc-icon-adn
+    homepage: ''
+navigation:
+    Vavilon:
+        label: 'tim.vavilon::lang.plugin.name'
+        url: tim/vavilon/mining
+        icon: icon-bitcoin
+        sideMenu:
+            side-menu-item:
+                label: Mining
+                url: tim/vavilon/mining
+                icon: icon-subscript
+            side-menu-item2:
+                label: Stacking
+                url: tim/vavilon/stacking
+                icon: icon-soundcloud

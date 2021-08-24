@@ -1,0 +1,31 @@
+columns:
+    name:
+        label: name
+        type: text
+    id:
+        label: id
+        type: number
+    profit:
+        label: profit
+        type: text
+    profit_min_percent:
+        label: profit_min_percent
+        type: number
+    profit_max_percent:
+        label: profit_max_percent
+        type: number
+    type:
+        label: type
+        type: text
+    min_attachment:
+        label: min_attachment
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    is_active:
+        label: is_active
+        type: text

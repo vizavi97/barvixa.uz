@@ -1,0 +1,6 @@
+fields:
+    info:
+        label: info
+        size: huge
+        span: full
+        type: textarea
