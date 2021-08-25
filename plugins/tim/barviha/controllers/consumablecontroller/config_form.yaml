@@ -1,0 +1,10 @@
+name: ConsumableController
+form: $/tim/barviha/models/consumable/fields.yaml
+modelClass: Tim\Barviha\Models\Consumable
+defaultRedirect: tim/barviha/consumablecontroller
+create:
+    redirect: 'tim/barviha/consumablecontroller/update/:id'
+    redirectClose: tim/barviha/consumablecontroller
+update:
+    redirect: tim/barviha/consumablecontroller
+    redirectClose: tim/barviha/consumablecontroller

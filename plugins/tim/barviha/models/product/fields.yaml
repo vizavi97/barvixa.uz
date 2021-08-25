@@ -39,3 +39,10 @@ fields:
         size: ''
         span: full
         type: richeditor
+tabs:
+    fields:
+        partial1:
+            label: Partial
+            span: auto
+            type: partial
+            tab: 'Tab 1'

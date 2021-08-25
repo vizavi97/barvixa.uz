@@ -1,0 +1,16 @@
+columns:
+    id:
+        label: id
+        type: number
+    title:
+        label: Название
+        type: text
+    type:
+        label: Велечина
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime
+    value:
+        label: Значение
+        type: switch

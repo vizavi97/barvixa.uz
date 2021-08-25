@@ -1,0 +1,27 @@
+fields:
+    title:
+        label: 'Название Расходного материала'
+        span: auto
+        type: text
+    code:
+        label: code
+        span: auto
+        disabled: 1
+        readOnly: 1
+        preset:
+            field: title
+            type: slug
+        type: text
+    type:
+        label: 'Еденица измерения'
+        options:
+            count: шт
+            ml: мл
+            gr: гр
+            kg: кг
+        span: auto
+        type: radio
+    value:
+        label: Значение
+        span: auto
+        type: number
