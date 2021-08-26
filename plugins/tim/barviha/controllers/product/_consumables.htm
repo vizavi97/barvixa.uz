@@ -1,27 +1,166 @@
-<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-
 <div id="contactForm">
-    <h1>Расходы</h1>
-    <ul>
-        <li v-for="c in consumables" :key="c.id">
-            <div>{{ c.title }}</div>
+    <h1 class="mb-2">Расходные продукты</h1>
+    <Dropdown
+            :options="consumables"
+            @selected="cl"
+            name="zipcode"
+            :maxItem="2"
+            placeholder="Выбирете продукт">
+    </Dropdown>
+    <ul class="consumable-list">
+        <li class="consumable-item" v-if="arr && arr.length > 0" v-for="(item,key) in arr" :key="item.id">
+            <div class="consumable-item-key">
+                <h5><strong>{{ ++key }}</strong></h5>
+                <a href="javascript:;" @click="() => deleteHandler(item.id)">❌</a>
+            </div>
+            <div class="consumable-item-group"><h3><strong>{{ item.title }}</strong></h3></div>
+            <div class="consumable-item-type"><h5>{{ item.group }}</h5></div>
+            <div class="consumable-item-title"><h5>{{ item.type }}</h5></div>
+            <div class="consumable-item-number">
+                <input type="number"
+                       @change="(event) => changeHandler(event.target.value, item.id)"
+                       :value="item.count"
+                       min="0">
+            </div>
         </li>
     </ul>
+    <div class="consumable-item mt-2" v-if="arr && arr.length > 0">
+        <button
+                type="button"
+                class="btn btn-success cuns-button btn-lg"
+                @click="sendRequest"
+        >
+            сохранить
+        </button>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/vue-simple-search-dropdown@1.0.1/dist/vue-simple-search-dropdown.min.js"></script>
 <script>
+    Vue.use(Dropdown);
     new Vue({
         el: '#contactForm',
         created() {
             fetch(`${window.location.origin}/api/consumables`)
                 .then(resp => resp.json())
-                .then(res => this.consumables = res)
+                .then(res => {
+                    this.arrOfConsumables.push(...res)
+                    res.forEach(item => {
+                        this.consumables.push({
+                            id: item.id,
+                            name: item.title
+                        })
+                    })
+                })
                 .catch(err => console.log("err", err))
         },
-        data() {
-            return {
-                consumables: [],
-            };
-        }
+        data: {
+            arr: [],
+            consumables: [],
+            arrOfConsumables: [],
+
+        },
+        methods: {
+            cl: function (event) {
+                const elem = this.arrOfConsumables.filter(item => item.id === event.id)[0];
+                const obj = {
+                    ...elem,
+                    count: 0
+                }
+                if (elem && !this.arr.some(item => item.id === elem.id)) {
+                    this.arr.push(obj);
+                }
+            },
+            deleteHandler: function (id) {
+                this.arr = this.arr.filter(item => item.id !== id);
+            },
+            changeHandler: function (value, id) {
+                this.arr.forEach((arrItem) => arrItem.id === id ? arrItem.count = value : null)
+            },
+            sendRequest: function () {
+                const lastLocation = window.location.pathname.split('/')
+                const updateId = lastLocation[lastLocation.length - 1];
+                fetch('https://barvixa.uz/api/consumables-creating', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({product_id: updateId, cons: this.arr})
+                });
+
+            }
+        },
     });
 </script>
+<style>
+    input[name="zipcode"] {
+        height: 52px;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 320px !important;
+        font-size: 2rem !important;
+    }
+
+    input[name="zipcode"]::-webkit-input-placeholder {
+        font-size: 24px;
+    }
+
+    #contactForm {
+        min-height: 400px;
+    }
+
+    .dropdown .dropdown-item {
+        font-size: 2rem !important;
+    }
+
+    .consumable-list {
+        list-style: none;
+        padding: 1rem 0;
+    }
+
+    .consumable-item {
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        max-height: 720px;
+    }
+
+    .consumable-item > * {
+        display: flex;
+        align-items: center;
+        padding-right: .375rem;
+    }
+
+    .consumable-item h5 {
+        font-size: 1.5rem !important;
+    }
+
+    .consumable-item > *:last-of-type {
+        padding-right: 0 !important;
+    }
+
+    .cuns-button {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        width: 300px !important;
+        max-width: 300px !important;
+    }
+
+    .consumable-item-number input {
+        padding: .5rem 1rem;
+        border: none;
+        outline: none;
+        box-shadow: 0 0 10px 3px rgba(144, 144, 144, .3);
+        font-size: 1.5rem;
+        background: white;
+    }
+
+    .consumable-item-key h5 {
+        min-width: 40px;
+
+    }
+</style>

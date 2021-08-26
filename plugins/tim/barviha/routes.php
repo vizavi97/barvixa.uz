@@ -8,6 +8,7 @@ use Tim\Barviha\Models\Hall;
 use Tim\Barviha\Models\Place;
 use Tim\Barviha\Models\Product;
 use Tim\Barviha\Models\ProductCategories;
+use Tim\Barviha\Models\ProductConsumble;
 use Tim\Vavilon\Classes\VavilonController;
 use Tim\Vavilon\Models\Refs;
 use Tymon\JWTAuth\Facades\JWTAuth as JWT;
@@ -176,11 +177,20 @@ Route::group(['prefix' => 'api'], function () {
         );
     });
     Route::get('/consumables', function () {
-
         return response()->json(Consumable::all());
     });
     Route::get('/price', function () {
         return response()->json('test');
     });
-
+    Route::post('/consumables-creating', function(Request $request) {
+        $product = $request->product_id;
+        $cons = $request->cons;
+        if(count($cons) > 0) {
+            foreach ($cons as $c) {
+                ProductConsumble::updateOrCreate(
+                    ['product_id' => $product, "consumable_id" => $c['id']],
+                    ['value' => (float)$c['count']]);
+            }
+        }
+    });
 });
