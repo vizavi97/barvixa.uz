@@ -1,0 +1,12 @@
+fields:
+    title:
+        label: Название
+        span: auto
+        type: text
+    code:
+        label: code
+        span: auto
+        preset:
+            field: title
+            type: slug
+        type: text
