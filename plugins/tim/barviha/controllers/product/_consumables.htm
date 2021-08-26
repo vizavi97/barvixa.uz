@@ -1,1 +1,27 @@
-<h1>Yeah</h1>
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+<div id="contactForm">
+    <h1>Расходы</h1>
+    <ul>
+        <li v-for="c in consumables" :key="c.id">
+            <div>{{ c.title }}</div>
+        </li>
+    </ul>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    new Vue({
+        el: '#contactForm',
+        created() {
+            fetch(`${window.location.origin}/api/consumables`)
+                .then(resp => resp.json())
+                .then(res => this.consumables = res)
+                .catch(err => console.log("err", err))
+        },
+        data() {
+            return {
+                consumables: [],
+            };
+        }
+    });
+</script>

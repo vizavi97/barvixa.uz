@@ -41,8 +41,8 @@ fields:
         type: richeditor
 tabs:
     fields:
-        partial1:
-            label: Partial
+        consumables:
             span: auto
+            path: $/tim/barviha/controllers/product/_consumables.htm
             type: partial
-            tab: 'Tab 1'
+            tab: 'Расход продуктов'

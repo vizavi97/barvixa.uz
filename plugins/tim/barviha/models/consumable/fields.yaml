@@ -3,15 +3,10 @@ fields:
         label: 'Название Расходного материала'
         span: auto
         type: text
-    code:
-        label: code
+    price:
+        label: Цена
         span: auto
-        disabled: 1
-        readOnly: 1
-        preset:
-            field: title
-            type: slug
-        type: text
+        type: number
     type:
         label: 'Еденица измерения'
         options:
@@ -25,3 +20,22 @@ fields:
         label: Значение
         span: auto
         type: number
+    code:
+        label: code
+        span: auto
+        disabled: 1
+        readOnly: 1
+        preset:
+            field: title
+            type: slug
+        type: text
+    group:
+        label: 'Группа товаров'
+        span: auto
+        type: text
+    category:
+        label: 'Категория товаров'
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation

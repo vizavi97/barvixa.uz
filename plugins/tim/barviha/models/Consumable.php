@@ -20,4 +20,7 @@ class Consumable extends Model
      */
     public $rules = [
     ];
+    public $belongsTo = [
+        'category' => ConsumablesCategories::class
+    ];
 }

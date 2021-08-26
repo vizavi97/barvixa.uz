@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use RainLab\User\Models\User as UserModel;
+use Tim\Barviha\Models\Consumable;
+use Tim\Barviha\Models\ConsumablesCategories;
 use Tim\Barviha\Models\Hall;
 use Tim\Barviha\Models\Place;
 use Tim\Barviha\Models\Product;
@@ -173,4 +175,12 @@ Route::group(['prefix' => 'api'], function () {
             ]
         );
     });
+    Route::get('/consumables', function () {
+
+        return response()->json(Consumable::all());
+    });
+    Route::get('/price', function () {
+        return response()->json('test');
+    });
+
 });
