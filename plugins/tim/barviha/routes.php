@@ -17,8 +17,6 @@ use Vdomah\JWTAuth\Models\Settings;
 use Vdomah\Roles\Models\Role;
 
 Route::group(['prefix' => 'api'], function () {
-    Route::post('barvixa', "\Tim\Barviha\Helpers\TelegramController@index");
-
 
     Route::post('login', function (Request $request) {
         if (Settings::get('is_login_disabled'))
@@ -176,21 +174,40 @@ Route::group(['prefix' => 'api'], function () {
             ]
         );
     });
-    Route::get('/consumables', function () {
-        return response()->json(Consumable::all());
-    });
-    Route::get('/price', function () {
-        return response()->json('test');
-    });
-    Route::post('/consumables-creating', function(Request $request) {
-        $product = $request->product_id;
-        $cons = $request->cons;
-        if(count($cons) > 0) {
-            foreach ($cons as $c) {
-                ProductConsumble::updateOrCreate(
-                    ['product_id' => $product, "consumable_id" => $c['id']],
-                    ['value' => (float)$c['count']]);
+    Route::group(['prefix' => 'consumables'], function() {
+        Route::get('/', function () {
+            return response()->json(Consumable::all());
+        });
+        Route::get('/{id}', function ($id){
+            $product_id = $id;
+            $resp = [];
+            $pc = ProductConsumble::where('product_id', $product_id)->with('product','consumable')->get();
+            if(count($pc) > 0) {
+                foreach ($pc as $p) {
+                    (object)$r = $p->consumable;
+                    $r->count = $p->value;
+                    array_push($resp, $r);
+                }
             }
-        }
+            return response()->json($resp);
+        });
+        Route::post('/create', function(Request $request) {
+            $product = $request->product_id;
+            $cons = $request->cons;
+            if(count($cons) > 0) {
+                foreach ($cons as $c) {
+                    ProductConsumble::updateOrCreate(
+                        ['product_id' => $product, "consumable_id" => $c['id']],
+                        ['value' => (float)$c['count']]);
+                }
+            }
+        });
+        Route::delete('/delete-consumables', function (Request $request) {
+            $product = $request->product_id;
+            $cons = $request->consumable_id;
+            $pc = ProductConsumble::where('product_id',$product)->where('consumable_id',$cons)->firstOrFail();
+            return response()->json($pc);
+        });
     });
+
 });

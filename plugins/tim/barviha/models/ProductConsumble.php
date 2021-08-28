@@ -21,6 +21,10 @@ class ProductConsumble extends Model
      */
     public $table = 'tim_barviha_product_consumbles';
 
+    public $belongsTo = [
+        'product' => Product::class,
+        'consumable' => Consumable::class
+    ];
     /**
      * @var array Validation rules
      */

@@ -42,6 +42,8 @@
     new Vue({
         el: '#contactForm',
         created() {
+            const lastLocation = window.location.pathname.split('/')
+            this.productId = lastLocation[lastLocation.length - 1];
             fetch(`${window.location.origin}/api/consumables`)
                 .then(resp => resp.json())
                 .then(res => {
@@ -54,11 +56,17 @@
                     })
                 })
                 .catch(err => console.log("err", err))
+            fetch(`${window.location.origin}/api/consumables/${this.productId}`)
+                .then(resp => resp.json())
+                .then(res => this.arr.push(...res))
+                .catch(err => console.log("err", err))
+            console.log(this.arr)
         },
         data: {
             arr: [],
             consumables: [],
             arrOfConsumables: [],
+            productId: null
 
         },
         methods: {
@@ -73,21 +81,27 @@
                 }
             },
             deleteHandler: function (id) {
+                fetch('https://barvixa.uz/api/consumables/create', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({product_id: this.productId, cons: id})
+                });
                 this.arr = this.arr.filter(item => item.id !== id);
             },
             changeHandler: function (value, id) {
                 this.arr.forEach((arrItem) => arrItem.id === id ? arrItem.count = value : null)
             },
             sendRequest: function () {
-                const lastLocation = window.location.pathname.split('/')
-                const updateId = lastLocation[lastLocation.length - 1];
-                fetch('https://barvixa.uz/api/consumables-creating', {
-                    method: 'POST',
+                fetch('https://barvixa.uz/api/consumables/create', {
+                    method: 'DELETE',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({product_id: updateId, cons: this.arr})
+                    body: JSON.stringify({product_id: this.productId, cons: this.arr})
                 });
 
             }
