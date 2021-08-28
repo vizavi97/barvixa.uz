@@ -1,0 +1,25 @@
+columns:
+    id:
+        label: id
+        type: number
+    price:
+        label: price
+        type: number
+    products:
+        label: products
+        type: text
+    status_id:
+        label: status_id
+        type: number
+    waiter_id:
+        label: waiter_id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    closed_at:
+        label: closed_at
+        type: text

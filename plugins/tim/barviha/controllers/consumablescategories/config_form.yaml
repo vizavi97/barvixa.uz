@@ -1,0 +1,10 @@
+name: ConsumablesCategories
+form: $/tim/barviha/models/consumablescategories/fields.yaml
+modelClass: Tim\Barviha\Models\ConsumablesCategories
+defaultRedirect: tim/barviha/consumablescategories
+create:
+    redirect: 'tim/barviha/consumablescategories/update/:id'
+    redirectClose: tim/barviha/consumablescategories
+update:
+    redirect: tim/barviha/consumablescategories
+    redirectClose: tim/barviha/consumablescategories

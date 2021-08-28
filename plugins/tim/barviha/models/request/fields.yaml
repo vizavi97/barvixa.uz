@@ -1,0 +1,5 @@
+fields:
+    price:
+        label: 'Итоговая цена счета'
+        span: auto
+        type: number

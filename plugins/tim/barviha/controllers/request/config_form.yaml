@@ -1,0 +1,10 @@
+name: Request
+form: $/tim/barviha/models/request/fields.yaml
+modelClass: Tim\Barviha\Models\Request
+defaultRedirect: tim/barviha/request
+create:
+    redirect: 'tim/barviha/request/update/:id'
+    redirectClose: tim/barviha/request
+update:
+    redirect: tim/barviha/request
+    redirectClose: tim/barviha/request
