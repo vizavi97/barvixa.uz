@@ -3,14 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use RainLab\User\Models\User as UserModel;
 use Tim\Barviha\Models\Consumable;
-use Tim\Barviha\Models\ConsumablesCategories;
 use Tim\Barviha\Models\Hall;
 use Tim\Barviha\Models\Place;
 use Tim\Barviha\Models\Product;
 use Tim\Barviha\Models\ProductCategories;
 use Tim\Barviha\Models\ProductConsumble;
-use Tim\Vavilon\Classes\VavilonController;
-use Tim\Vavilon\Models\Refs;
 use Tymon\JWTAuth\Facades\JWTAuth as JWT;
 use Illuminate\Http\Request;
 use Vdomah\JWTAuth\Models\Settings;
@@ -159,7 +156,6 @@ Route::group(['prefix' => 'api'], function () {
             return response()->json(array('message' => 'token_absent'), 404);
         }
     });
-
     Route::get('/info', function () {
         $halls = Hall::with('preview_img')->get();
         $places = Place::all()->groupBy('hall_id');
@@ -173,6 +169,13 @@ Route::group(['prefix' => 'api'], function () {
                 "food_categories" => $food_categories
             ]
         );
+    });
+
+    Route::group(['prefix' => 'request'], function(){
+        Route::post('create', function(Request $request) {
+
+            return response()->json('complete');
+        });
     });
     Route::group(['prefix' => 'consumables'], function() {
         Route::get('/', function () {
@@ -202,12 +205,18 @@ Route::group(['prefix' => 'api'], function () {
                 }
             }
         });
-        Route::delete('/delete-consumables', function (Request $request) {
+        Route::delete('/delete', function (Request $request) {
             $product = $request->product_id;
-            $cons = $request->consumable_id;
-            $pc = ProductConsumble::where('product_id',$product)->where('consumable_id',$cons)->firstOrFail();
-            return response()->json($pc);
+            $cons = $request->cons;
+            try {
+                $pc = ProductConsumble::where('product_id',$product)->where('consumable_id',$cons)->firstOrFail();
+                $pc->delete();
+                return response()->json("deleted");
+
+            }
+            catch (Exception $e) {
+                return response()->json("not found");
+            }
         });
     });
-
 });

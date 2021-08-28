@@ -60,7 +60,6 @@
                 .then(resp => resp.json())
                 .then(res => this.arr.push(...res))
                 .catch(err => console.log("err", err))
-            console.log(this.arr)
         },
         data: {
             arr: [],
@@ -81,8 +80,8 @@
                 }
             },
             deleteHandler: function (id) {
-                fetch('https://barvixa.uz/api/consumables/create', {
-                    method: 'POST',
+                fetch('https://barvixa.uz/api/consumables/delete', {
+                    method: 'DELETE',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
@@ -96,7 +95,7 @@
             },
             sendRequest: function () {
                 fetch('https://barvixa.uz/api/consumables/create', {
-                    method: 'DELETE',
+                    method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
