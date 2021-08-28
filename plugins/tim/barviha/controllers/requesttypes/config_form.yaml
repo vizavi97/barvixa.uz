@@ -1,0 +1,10 @@
+name: RequestTypes
+form: $/tim/barviha/models/requesttypes/fields.yaml
+modelClass: Tim\Barviha\Models\RequestTypes
+defaultRedirect: tim/barviha/requesttypes
+create:
+    redirect: 'tim/barviha/requesttypes/update/:id'
+    redirectClose: tim/barviha/requesttypes
+update:
+    redirect: tim/barviha/requesttypes
+    redirectClose: tim/barviha/requesttypes

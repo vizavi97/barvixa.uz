@@ -6,8 +6,11 @@ use Tim\Barviha\Models\Consumable;
 use Tim\Barviha\Models\Hall;
 use Tim\Barviha\Models\Place;
 use Tim\Barviha\Models\Product;
+use Tim\Barviha\Models\Request as AppRequest;
 use Tim\Barviha\Models\ProductCategories;
 use Tim\Barviha\Models\ProductConsumble;
+use Tim\Barviha\Models\RequestProducts;
+use Tim\Barviha\Models\RequestTypes;
 use Tymon\JWTAuth\Facades\JWTAuth as JWT;
 use Illuminate\Http\Request;
 use Vdomah\JWTAuth\Models\Settings;
@@ -171,21 +174,86 @@ Route::group(['prefix' => 'api'], function () {
         );
     });
 
-    Route::group(['prefix' => 'request'], function(){
-        Route::post('create', function(Request $request) {
+    Route::group(['prefix' => 'request'], function () {
+        Route::get('/', function (Request $request) {
+            $token = $request->header('Authorization');
+            try {
+                JWT::setToken($token); //<-- set token and check
+                if (!$claim = JWT::getPayload()) {
+                    return response()->json(array('message' => 'user_not_found'), 404);
+                }
 
-            return response()->json('complete');
+                $userData = JWT::toUser($token);
+                $appRequests = AppRequest::with('products')->where('waiter_id', $userData->id)->get();
+
+                return response()->json($appRequests);
+
+            } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+                return response()->json(array('message' => 'token_expired'), 404);
+            } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+                return response()->json(array('message' => 'token_invalid'), 404);
+            } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+                return response()->json(array('message' => 'token_absent'), 404);
+            }
+        });
+        Route::post('create', function (Request $request) {
+            $data = $request->data;
+            $place_id = $request->place_id;
+            $hall_id = $request->hall_id;
+            $user_token = $request->user_token;
+            if(count($data) < 1) {
+                return response()->json('error - empty data');
+            }
+
+            try {
+                JWT::setToken($user_token); //<-- set token and check
+                if (!JWT::getPayload()) {
+                    return response()->json(array('message' => 'user_not_found'), 404);
+                }
+                $waiter = JWT::toUser($user_token);
+                $status_id = RequestTypes::where('code', 'new')->pluck('id')->first();
+                $amount = array_reduce($data, function($carry, $item) {
+                    $carry += $item['count'] * $item['cost'];
+                    return $carry;
+                });
+                $app = new AppRequest;
+                $app->waiter_id = $waiter->id;
+                $app->hall_id = $hall_id;
+                $app->place_id = $place_id;
+                $app->amount = $amount;
+                $app->status_id = $status_id;
+
+                $app->save();
+
+                foreach ($data as $item) {
+                    $product_cost = Product::where('id', $item['id'])->pluck('cost')->first();
+                    $requestProduct = new RequestProducts;
+                    $requestProduct->request_id = $app->id;
+                    $requestProduct->product_id = $item['id'];
+                    $requestProduct->count = $item['count'];
+                    $requestProduct->total_value = $item['count'] * $product_cost;
+                    $requestProduct->save();
+                }
+
+                return response()->json('success', 200);
+
+
+            } catch (Exception $e) {
+
+                return response()->json('error', 400);
+
+            }
         });
     });
-    Route::group(['prefix' => 'consumables'], function() {
+    Route::group(['prefix' => 'consumables'], function () {
         Route::get('/', function () {
             return response()->json(Consumable::all());
         });
-        Route::get('/{id}', function ($id){
+        Route::get('/{id}', function ($id) {
             $product_id = $id;
             $resp = [];
-            $pc = ProductConsumble::where('product_id', $product_id)->with('product','consumable')->get();
-            if(count($pc) > 0) {
+            $pc = ProductConsumble::where('product_id', $product_id)->with('product', 'consumable')->get();
+            if (count($pc) > 0) {
                 foreach ($pc as $p) {
                     (object)$r = $p->consumable;
                     $r->count = $p->value;
@@ -194,10 +262,10 @@ Route::group(['prefix' => 'api'], function () {
             }
             return response()->json($resp);
         });
-        Route::post('/create', function(Request $request) {
+        Route::post('/create', function (Request $request) {
             $product = $request->product_id;
             $cons = $request->cons;
-            if(count($cons) > 0) {
+            if (count($cons) > 0) {
                 foreach ($cons as $c) {
                     ProductConsumble::updateOrCreate(
                         ['product_id' => $product, "consumable_id" => $c['id']],
@@ -209,12 +277,11 @@ Route::group(['prefix' => 'api'], function () {
             $product = $request->product_id;
             $cons = $request->cons;
             try {
-                $pc = ProductConsumble::where('product_id',$product)->where('consumable_id',$cons)->firstOrFail();
+                $pc = ProductConsumble::where('product_id', $product)->where('consumable_id', $cons)->firstOrFail();
                 $pc->delete();
                 return response()->json("deleted");
 
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 return response()->json("not found");
             }
         });

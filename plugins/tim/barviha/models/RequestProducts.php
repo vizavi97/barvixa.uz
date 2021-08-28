@@ -5,7 +5,7 @@ use Model;
 /**
  * Model
  */
-class Request extends Model
+class RequestProducts extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     
@@ -13,15 +13,11 @@ class Request extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tim_barviha_requests';
+    public $table = 'tim_barviha_request_products';
 
     /**
      * @var array Validation rules
      */
     public $rules = [
     ];
-
-    public function products() {
-        return $this->hasMany(RequestProducts::class, 'request_id');
-    }
 }

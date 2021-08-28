@@ -1,0 +1,15 @@
+fields:
+    title:
+        label: 'Название Статуса'
+        span: auto
+        type: text
+    code:
+        label: Slug
+        span: auto
+        disabled: 0
+        readOnly: 0
+        defaultFrom: title
+        preset:
+            field: title
+            type: slug
+        type: text
