@@ -184,7 +184,12 @@ Route::group(['prefix' => 'api'], function () {
                 }
 
                 $userData = JWT::toUser($token);
-                $appRequests = AppRequest::with('products')->where('waiter_id', $userData->id)->get();
+                $appRequests = AppRequest::with(['products','status', 'hall','place'])->where('waiter_id', $userData->id)->get();
+                foreach ($appRequests as $ap) {
+                    foreach ($ap->products as $product) {
+                        $product->product = Product::with('preview_img')->find($product->product_id);
+                    }
+                }
 
                 return response()->json($appRequests);
 
