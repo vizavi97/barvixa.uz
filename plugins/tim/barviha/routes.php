@@ -49,11 +49,7 @@ Route::group(['prefix' => 'api'], function () {
                 'email' => $userModel->email,
                 'is_activated' => $userModel->is_activated,
                 'phone' => $userModel->phone,
-                "soc" => [
-                    "soc_facebook" => $userModel->soc_facebook,
-                    "soc_instagram" => $userModel->soc_instagram,
-                    "soc_telegram" => $userModel->soc_telegram
-                ]
+                "role" => Role::where('id', $userModel->vdomah_role_id)->first(['name', 'code'])
             ];
         }
         // if no errors are encountered we can return a JWT
@@ -147,7 +143,7 @@ Route::group(['prefix' => 'api'], function () {
                 'email' => $userData->email,
                 'is_activated' => $userData->is_activated,
                 'phone' => $userData->phone,
-                "role" => Role::find($userData->vdomah_role_id)->first(['name', 'code'])
+                "role" => Role::where('id', $userData->vdomah_role_id)->first(['name', 'code'])
             ];
             return response()->json(["user" => $user]);
 
@@ -159,6 +155,7 @@ Route::group(['prefix' => 'api'], function () {
             return response()->json(array('message' => 'token_absent'), 404);
         }
     });
+
     Route::get('/info', function () {
         $halls = Hall::with('preview_img')->get();
         $places = Place::all()->groupBy('hall_id');
@@ -184,7 +181,7 @@ Route::group(['prefix' => 'api'], function () {
                 }
 
                 $userData = JWT::toUser($token);
-                $appRequests = AppRequest::with(['products','status', 'hall','place'])->where('waiter_id', $userData->id)->get();
+                $appRequests = AppRequest::with(['products', 'status', 'hall', 'place'])->where('waiter_id', $userData->id)->get();
                 foreach ($appRequests as $ap) {
                     foreach ($ap->products as $product) {
                         $product->product = Product::with('preview_img')->find($product->product_id);
@@ -206,7 +203,7 @@ Route::group(['prefix' => 'api'], function () {
             $place_id = $request->place_id;
             $hall_id = $request->hall_id;
             $user_token = $request->user_token;
-            if(count($data) < 1) {
+            if (count($data) < 1) {
                 return response()->json('error - empty data');
             }
 
@@ -217,7 +214,7 @@ Route::group(['prefix' => 'api'], function () {
                 }
                 $waiter = JWT::toUser($user_token);
                 $status_id = RequestTypes::where('code', 'new')->pluck('id')->first();
-                $amount = array_reduce($data, function($carry, $item) {
+                $amount = array_reduce($data, function ($carry, $item) {
                     $carry += $item['count'] * $item['cost'];
                     return $carry;
                 });
