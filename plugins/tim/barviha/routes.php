@@ -156,19 +156,44 @@ Route::group(['prefix' => 'api'], function () {
         }
     });
 
-    Route::get('/info', function () {
-        $halls = Hall::with('preview_img')->get();
-        $places = Place::all()->groupBy('hall_id');
-        $food = Product::with('preview_img')->get();
-        $food_categories = ProductCategories::with('preview_img')->get();
-        return response()->json(
-            [
-                "halls" => $halls,
-                "places" => $places,
-                "food" => $food,
-                "food_categories" => $food_categories
-            ]
-        );
+    Route::get('/info', function (Request $request) {
+        $token = $request->header('Authorization');
+        try {
+            JWT::setToken($token); //<-- set token and check
+            if (!$claim = JWT::getPayload()) {
+                return response()->json(array('message' => 'user_not_found'), 404);
+            }
+
+            $userData = JWT::toUser($token);
+            $appRequests = AppRequest::with(['products', 'status', 'hall', 'place'])->where('waiter_id', $userData->id)->get();
+            foreach ($appRequests as $ap) {
+                foreach ($ap->products as $product) {
+                    $product->product = Product::with('preview_img')->find($product->product_id);
+                }
+            }
+
+            $halls = Hall::with('preview_img')->get();
+            $places = Place::all()->groupBy('hall_id');
+            $food = Product::with('preview_img')->get();
+            $food_categories = ProductCategories::with('preview_img')->get();
+            return response()->json(
+                [
+                    "halls" => $halls,
+                    "places" => $places,
+                    "all_places" => Place::all(),
+                    "food" => $food,
+                    "food_categories" => $food_categories,
+                    "records"  => $appRequests
+                ]
+            );
+
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(array('message' => 'token_expired'), 404);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(array('message' => 'token_invalid'), 404);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(array('message' => 'token_absent'), 404);
+        }
     });
 
     Route::group(['prefix' => 'request'], function () {
@@ -226,6 +251,7 @@ Route::group(['prefix' => 'api'], function () {
                 $app->status_id = $status_id;
 
                 $app->save();
+                Place::where("id",$place_id)->update(['is_busy', 1]);
 
                 foreach ($data as $item) {
                     $product_cost = Product::where('id', $item['id'])->pluck('cost')->first();
@@ -242,7 +268,7 @@ Route::group(['prefix' => 'api'], function () {
 
             } catch (Exception $e) {
 
-                return response()->json('error', 400);
+                return response()->json(['message' => 400, 'error' => $e]);
 
             }
         });
